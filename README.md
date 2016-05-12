@@ -1,6 +1,6 @@
 # APCS2_Final--Othello
 
-Repository containing files for Vandana Agarwala's APCS Final Project - an implementation of the game Othello.
+Repository containing files for Vandana Agarwala's APCS Final Project - an implementation of the game Othello. \n
 In order to run: 
 
 Team Name:
