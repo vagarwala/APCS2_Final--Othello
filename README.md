@@ -14,3 +14,4 @@ Project Plan/Outline:
 
 Development Log:  
 5/11/16: ... created repo  
+5/12/16: I am now familiar with the game :P
