@@ -15,3 +15,4 @@ Project Plan/Outline:
 Development Log:  
 5/11/16: ... created repo  
 5/12/16: I am now familiar with the game :P
+5/13/16: Spending the day just figuring out the basics of coding this game.  Will begin by coding multiplayer version (aka no AI)
