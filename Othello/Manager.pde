@@ -1,13 +1,10 @@
+// this class does all the things
 public class Manager  {
 	int t;
 	int gamePhase = 0;
 
 	Field field;
 	Stones stones;
-	Indicator indicator;
-	Ai ai;
-	CSVExporter csv;
-	Buffers buffer;
 
 	boolean isOpponentAi = false;
 	boolean isOpponentBlack = false;

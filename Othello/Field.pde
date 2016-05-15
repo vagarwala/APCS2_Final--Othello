@@ -1,5 +1,3 @@
-//coded by Yota Odaka
-
 // this class will show board graphics
 public class Field{
 

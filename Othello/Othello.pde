@@ -1,7 +1,3 @@
-  //coded by Yota Odaka
-
-//othello program
-
 final int SIZE = 50; // width and height size of a square
 final int NUM_SIDE = 8; // the number of squares in a row or column
 final int NUM_GAME_PHASE  = NUM_SIDE*NUM_SIDE-3;

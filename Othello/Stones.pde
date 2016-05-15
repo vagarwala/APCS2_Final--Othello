@@ -1,5 +1,3 @@
-//coded by Yota Odaka
-
 // this class will show stones graphics 
 public class Stones  {
 	Field field;
