@@ -22,22 +22,22 @@ void settings(){
   size(10*SIZE, 10*SIZE);
 }
 void setup(){
-  	//manager = new Manager();
-	manager = new Manager(false);
+    //manager = new Manager();
+  manager = new Manager(false);
 }
 
 // main program
 void draw(){
-  	background(40);
-  	manager.update(global_t);
-  	global_t++;
+    background(40);
+    manager.update(global_t);
+    global_t++;
 }
 
 //mouse event
 void mousePressed(){
-  	manager.mousePressed(mouseX, mouseY);
+    manager.mousePressed(mouseX, mouseY);
 }
 
 void keyPressed(){
-	manager.keyPressed(key);
+  manager.keyPressed(key);
 }
