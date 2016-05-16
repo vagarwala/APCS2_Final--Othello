@@ -59,7 +59,6 @@ public class Manager  {
       println("game phase: "+this.gamePhase);
       println("black turn: "+this.black_turn);
     }
-    if(key == 'p')this.buffer.printPhase();
   }
   // mouse event
   public void mousePressed(int mx, int my){
