@@ -32,6 +32,6 @@ Specific plan (Files):
 Development Log:  
 5/11/16: ... created repo  
 5/12/16: I am now familiar with the game :P  
-5/14/16: Stones.pde, Field.pde, Othello.pde finished.  Started Manager.pde.  When I figure out how to actually make the AI, I know my black and white stones will flip as desired and the board will look nice. :P
+5/14/16: Stones.pde, Field.pde, Othello.pde finished.  Started Manager.pde.  When I figure out how to actually make the AI, I know my black and white stones will flip as desired and the board will look nice. :P  
 5/15/16: I made a plan.  The plan is detailed above.
 5/16/16: Code backbones done.  Time for the real work to begin :P
