@@ -17,12 +17,10 @@ Manager manager;
 
 int global_t = 0; // this value will show frame count
 
-// prepare this program
 void settings(){
   size(10*SIZE, 10*SIZE);
 }
 void setup(){
-    //manager = new Manager();
   manager = new Manager(false);
 }
 

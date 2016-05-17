@@ -78,4 +78,3 @@ public class Stones  {
     animationTime[_i][_j] = 0;
   }
 }
-}

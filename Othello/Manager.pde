@@ -5,6 +5,8 @@ public class Manager  {
 
   Field field;
   Stones stones;
+  Indicator indicator;
+  Ai ai;
 
   boolean isOpponentAi = false;
   boolean isOpponentBlack = false;

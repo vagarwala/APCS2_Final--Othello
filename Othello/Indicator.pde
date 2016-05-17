@@ -34,4 +34,4 @@ public class Indicator{
   }
   private void drawResult(){
   }
-  
+}
