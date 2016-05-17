@@ -10,6 +10,18 @@ public class Ai{
   }
   
   public void run(){
+    if(this.manager.isGameOver)
+      return;
+    if(this.manager.isPass)
+      return;
+    this.isMyTurn = (this.manager.black_turn==this.isBlack)?true:false;
+    if(!this.isMyTurn)
+      return;
+    if(this.manager.indicator.bPlayerFrameAnimation)
+      return;
+    PVector newStonePos = decideStonePos();
+    this.manager.putStone((int)newStonePos.x, (int)newStonePos.y);
+    this.isMyTurn = false;
   }
   
   public PVector decideStonePos(){

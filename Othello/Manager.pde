@@ -70,30 +70,30 @@ public class Manager  {
   }
 
   // recursion method to reverse stones
-  private void returnStones(int _x, int _y, boolean _bBlackTrun, int i, int j, boolean isFirstDetect){
+  private void returnStones(int _x, int _y, boolean _bBlackTurn, int i, int j, boolean isFirstDetect){
   }
 
   // check whether each directions of all squares are available
   public void detectSpaceOpen(boolean black_turn){
-    boolean bBlackTrun = black_turn;
+    boolean bBlackTurn = black_turn;
     for(int i = 0; i < NUM_SIDE; i++){
       for (int j = 0; j < NUM_SIDE; j++) {
-        this.field.isOpen[i][j] = this.detectSpaceOpen(i, j, bBlackTrun);
+        this.field.isOpen[i][j] = this.detectSpaceOpen(i, j, bBlackTurn);
       }
     }
   }
 
   // check whether each directions of a square are available
-  private boolean detectSpaceOpen(int _x, int _y, boolean _bBlackTrun){
+  private boolean detectSpaceOpen(int _x, int _y, boolean _bBlackTurn){
     //if this square is empty, return false
     if(this.field.field[_x][_y] != NONE)return false;
-    boolean bBlackTrun = _bBlackTrun;
+    boolean bBlackTurn = _bBlackTurn;
     boolean bValid = false;
     // check all directions
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
         if(i==0 && j==0)continue;
-        boolean bTemp = this.detectSpaceOpen(_x, _y, bBlackTrun, i, j, true);
+        boolean bTemp = this.detectSpaceOpen(_x, _y, bBlackTurn, i, j, true);
         this.field.isOpenDir[_x][_y][i+1][j+1] = false;
         if(bTemp)this.field.isOpenDir[_x][_y][1+i][1+j] = true;
         bValid |=  bTemp;
@@ -103,9 +103,9 @@ public class Manager  {
   }
 
   // recursion method to find directions that stones can reverse
-  private boolean detectSpaceOpen(int _x, int _y, boolean _bBlackTrun, int dir_x, int dir_y, boolean isFirstDetect){
+  private boolean detectSpaceOpen(int _x, int _y, boolean _bBlackTurn, int dir_x, int dir_y, boolean isFirstDetect){
     // which color this turn is now
-    int tempColor = (_bBlackTrun)?BLACK:WHITE;
+    int tempColor = (_bBlackTurn)?BLACK:WHITE;
     // target index
     _x += dir_x;
     _y += dir_y;
@@ -118,6 +118,6 @@ public class Manager  {
     //if there is/are a/some stone/stones between stones which is same color, return true
     if(!isFirstDetect && this.field.field[_x][_y] == tempColor)return true;
     //if color of stone which is checked now is same color, call myself(recursion)
-    return this.detectSpaceOpen(_x, _y, _bBlackTrun, dir_x, dir_y, false);
+    return this.detectSpaceOpen(_x, _y, _bBlackTurn, dir_x, dir_y, false);
   }
 }

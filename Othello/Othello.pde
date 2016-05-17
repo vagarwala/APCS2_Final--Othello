@@ -8,8 +8,8 @@ final int NONE = 0; // indicate empty square
 final int BLACK = 1; // indicate square where black stone put or winner is black
 final int WHITE = 2; // indicate square where white stone put or winner is white
 final int DRAW = -1; // indicate this game ended in a draw
-final color OTHELLO_WHITE = color(230); // white color
-final color OTHELLO_BLACK = color(10); // black color
+final color OTHELLO_WHITE = color(256); // white color
+final color OTHELLO_BLACK = color(0); // black color
 final color OTHELLO_GREEN = color(0, 128, 0); // green color
 
 
