@@ -21,28 +21,65 @@ public class Manager  {
 
   // constructor
   public Manager () {
-        
+    t = 0;
+    this.field = new Field();
+    this.stones = new Stones(field);
+    this.indicator = new Indicator(this);
+    //this.csv = new CSVExporter();
+    //this.buffer = new Buffers();
+
+    this.detectSpaceOpen(this.black_turn); // initialize which square you can put
+    
+    this.isOpponentAi = false;
+    // save this state
+    int[][] tField = new int[NUM_SIDE][NUM_SIDE];  
+    for(int i = 0; i < NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        tField[i][j] = this.field.field[i][j];
+      }
+    }
+    //this.buffer.save(new PhaseBuffer(tField, new PVector(-1, -1), this.black_turn), this.gamePhase);
+
   }
 
   // constructor for playing with AI opponent
   public Manager(boolean isOpponentBlack) {
+    this();
+    // AI part
+    this.isOpponentAi = true;
+    this.isOpponentBlack = isOpponentBlack;
+    this.ai = new Ai(this.isOpponentBlack, this);
   }
 
   //this method have to called in main draw()
   public void update(int global_t) {
+    this.t = global_t;
+    this.field.draw();
+    this.stones.draw();
+    this.indicator.draw();
+    if(isOpponentAi)this.ai.run();
   }
 
   //if at least one square is available, return true
   public boolean isThereOpen(){
+    for(boolean[] b_array: this.field.isOpen){
+      for(boolean b: b_array){
+        if(b)
+          return true;
+      }
+    }
+    return false; // if no square is available
   }
 
   //return the number of squares where is stones put
   public int getStonePut() {
+    return 0;
   }
 
   //return now score
   public PVector getScores() {
     //x element is black score, y is white score
+    return new PVector(1, 1);
   }
 
   //put stone
