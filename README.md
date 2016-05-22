@@ -35,4 +35,9 @@ Development Log:
 5/14/16: Stones.pde, Field.pde, Othello.pde finished.  Started Manager.pde.  When I figure out how to actually make the AI, I know my black and white stones will flip as desired and the board will look nice. :P  
 5/15/16: I made a plan.  The plan is detailed above.
 5/16/16: Code backbones done.  Time for the real work to begin :P
-5/17/16: AI planned out, time to start coding it.
+5/17/16: AI planned out, time to start coding it. But tonight I'm studying for APUSH and sleeping :P
+5/18/16: Coded the first component -- efficiency of move.
+5/19/16: haha physics will be my death what is this I understand everything but the test is still hard and I don't even know why
+5/20/16: putStone function almost completed
+5/21/16: completed putStone
+5/22/16: hi sorry I forgot to commit and push this ever but this is a working demo version although quite undeveloped...
