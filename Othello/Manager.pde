@@ -7,8 +7,8 @@ public class Manager  {
   Stones stones;
   Indicator indicator;
   Ai ai;
-  //CSVExporter csv;
-  //Buffers buffer;
+  CSVExporter csv;
+  Buffers buffer;
 
   boolean isOpponentAi = false;
   boolean isOpponentBlack = false;
@@ -27,8 +27,8 @@ public class Manager  {
     this.field = new Field();
     this.stones = new Stones(field);
     this.indicator = new Indicator(this);
-    //this.csv = new CSVExporter();
-    //this.buffer = new Buffers();
+    this.csv = new CSVExporter();
+    this.buffer = new Buffers();
 
     this.detectSpaceOpen(this.black_turn); // initialize which square you can put
     
@@ -40,7 +40,7 @@ public class Manager  {
         tField[i][j] = this.field.field[i][j];
       }
     }
-    //this.buffer.save(new PhaseBuffer(tField, new PVector(-1, -1), this.black_turn), this.gamePhase);
+    this.buffer.save(new PhaseBuffer(tField, new PVector(-1, -1), this.black_turn), this.gamePhase);
 
   }
 
@@ -60,12 +60,10 @@ public class Manager  {
     this.stones.draw();
     this.indicator.draw();
     if(isOpponentAi)this.ai.run();
-    /*
     if(this.isGameOver && !this.isSaved){
       this.csv.addValues((int)this.getScores().x, (int)this.getScores().y, winner);
       this.isSaved = true;
     }
-    */
   }
 
   //if at least one square is available, return true
@@ -140,7 +138,6 @@ public class Manager  {
           // change turn
           this.black_turn = true;
         }
-        /*
         // save this state
         println("this.gamephase", this.gamePhase);
         int[][] tField = new int[NUM_SIDE][NUM_SIDE];
@@ -158,7 +155,6 @@ public class Manager  {
         this.buffer.printPhase();
         // trigger a animation of frame
         this.indicator.bPlayerFrameAnimation = true;
-        */
       }
       
     }
@@ -273,16 +269,19 @@ public class Manager  {
   // check whether each directions of a square are available
   private boolean detectSpaceOpen(int _x, int _y, boolean _BlackTurn){
     //if this square is empty, return false
-    if(this.field.field[_x][_y] != NONE)return false;
+    if(this.field.field[_x][_y] != NONE)
+      return false;
     boolean BlackTurn = _BlackTurn;
     boolean bValid = false;
     // check all directions
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
-        if(i==0 && j==0)continue;
+        if(i==0 && j==0)
+          continue;
         boolean bTemp = this.detectSpaceOpen(_x, _y, BlackTurn, i, j, true);
         this.field.isOpenDir[_x][_y][i+1][j+1] = false;
-        if(bTemp)this.field.isOpenDir[_x][_y][1+i][1+j] = true;
+        if(bTemp)
+          this.field.isOpenDir[_x][_y][1+i][1+j] = true;
         bValid |=  bTemp;
       }
     }
@@ -297,13 +296,17 @@ public class Manager  {
     _x += dir_x;
     _y += dir_y;
     // if this target is out of board, return false
-    if(_x<0 || NUM_SIDE-1<_x || _y<0 || NUM_SIDE-1<_y)return false;
+    if(_x<0 || NUM_SIDE-1<_x || _y<0 || NUM_SIDE-1<_y)
+      return false;
     //if this target is empty, return false
-    if(this.field.field[_x][_y] == NONE)return false;
+    if(this.field.field[_x][_y] == NONE)
+      return false;
     //if color whose is next to start stone is same, return false
-    if(isFirstDetect && this.field.field[_x][_y]  == tempColor)return false;
+    if(isFirstDetect && this.field.field[_x][_y]  == tempColor)
+      return false;
     //if there is/are a/some stone/stones between stones which is same color, return true
-    if(!isFirstDetect && this.field.field[_x][_y] == tempColor)return true;
+    if(!isFirstDetect && this.field.field[_x][_y] == tempColor)
+      return true;
     //if color of stone which is checked now is same color, call myself(recursion)
     return this.detectSpaceOpen(_x, _y, _BlackTurn, dir_x, dir_y, false);
   }

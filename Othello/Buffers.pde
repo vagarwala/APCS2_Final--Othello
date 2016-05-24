@@ -16,7 +16,6 @@ public class Buffers{
   }
   
   public void optimize(){
-    println("buffers.size()", buffers.size());
     for(int i = this.buffers.size()-1; i > this.tempPhase; i--){
       this.buffers.remove(i);
     }
