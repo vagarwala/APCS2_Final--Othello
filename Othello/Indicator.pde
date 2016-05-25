@@ -119,7 +119,7 @@ public class Indicator{
       textAlign(CENTER);
       textSize(50);
       fill(#880000);
-      text(resultWinner, width/2, height/2);
+      text(resultWinner, width/2, height/2-50);
       //draw scores
       textSize(40);
       if(this.manager.winner==BLACK)
@@ -128,14 +128,18 @@ public class Indicator{
         textSize(40);
       textAlign(LEFT);
       fill(0);
-      text((int)this.manager.getScores().x, width/3, height/2+100);
+      text((int)this.manager.getScores().x, width/3, height/2+50);
       if(this.manager.winner == WHITE)
         textSize(50);
       else
         textSize(40);
       textAlign(RIGHT);
       fill(255);
-      text((int)this.manager.getScores().y, 2*width/3, height/2+100);
+      text((int)this.manager.getScores().y, 2*width/3, height/2+50);
+      textAlign(CENTER);
+      textSize(20);
+      fill(#880000);
+      text("Press r to reset.", width/2, height/2 + 100);
     }
   }
 }

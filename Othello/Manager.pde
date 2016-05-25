@@ -151,7 +151,6 @@ public class Manager  {
         PhaseBuffer temp = new PhaseBuffer(tField, new PVector(x, y), rBlack);
         println("temp", temp);
         this.buffer.save(temp, this.gamePhase);
-        //this.buffer.save(this.field.field, x, y, !this.black_turn, this.gamePhase);
         this.buffer.printPhase();
         // trigger a animation of frame
         this.indicator.bPlayerFrameAnimation = true;
@@ -194,11 +193,60 @@ public class Manager  {
   }
 
   private void undo() {
+    if(this.indicator.bPlayerFrameAnimation)return;
+    if(this.gamePhase < 1 || this.gamePhase > this.buffer.buffers.size())return;
+    else if(this.gamePhase == 1){
+      this.gamePhase--;
+      println("deff = 1");
+    }
+    else if (this.gamePhase > 1 && this.gamePhase < this.buffer.buffers.size()){
+      this.gamePhase-=2;
+      println("deff = 2");
+    }
+    
+    PhaseBuffer b = this.buffer.get(this.gamePhase, true);
+    for(int i = 0; i < NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        this.field.field[i][j] = b.fieldBuffer[i][j];
+      }
+    }
+    this.indexStonePutLast.set(b.putPosBuffer);
+    this.field.indexStonePutLast.set(b.putPosBuffer);
+    println("turncolor",b.turnColor);
+    this.black_turn = (b.turnColor == BLACK)? true: false;
+    this.indicator.isTargetTurnBlack = this.black_turn;
+    this.indicator.bPlayerFrameAnimation = true;
+    this.detectSpaceOpen(this.black_turn);
+    println("black_turn: "+black_turn);
+  }
+  
+  private void reset(){
+    if(this.indicator.bPlayerFrameAnimation)return;
+    if(this.gamePhase < 1 || this.gamePhase > this.buffer.buffers.size())return;
+    this.gamePhase=0;
+    PhaseBuffer b = this.buffer.get(this.gamePhase, true);
+    for(int i = 0; i < NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        this.field.field[i][j] = b.fieldBuffer[i][j];
+      }
+    }
+    this.indexStonePutLast.set(b.putPosBuffer);
+    this.field.indexStonePutLast.set(b.putPosBuffer);
+    println("turncolor",b.turnColor);
+    this.black_turn = (b.turnColor == BLACK)? true: false;
+    this.indicator.isTargetTurnBlack = this.black_turn;
+    this.indicator.bPlayerFrameAnimation = true;
+    this.detectSpaceOpen(this.black_turn);
+    println("black_turn: "+black_turn);
+    this.isGameOver = false;
   }
   
   public void keyPressed(int key){
     if(key == ' '){
       this.undo();
+    }
+    if (key == 'r'){
+      this.reset();
     }
     if(key == 'a'){
       println("--analysis--");
