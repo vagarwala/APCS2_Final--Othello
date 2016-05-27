@@ -15,23 +15,23 @@ public class Field{
   public Field () {
     stones = new Stones(this);
 
-    this.field = new int[NUM_SIDE][NUM_SIDE];
-    this.fieldPos = new PVector[NUM_SIDE][NUM_SIDE];
-    this.indexStonePutLast = new PVector(-1, -1);
-    this.isOpen = new boolean[NUM_SIDE][NUM_SIDE];
-    this.isOpenDir = new boolean[NUM_SIDE][NUM_SIDE][3][3];
+    field = new int[NUM_SIDE][NUM_SIDE];
+    fieldPos = new PVector[NUM_SIDE][NUM_SIDE];
+    indexStonePutLast = new PVector(-1, -1);
+    isOpen = new boolean[NUM_SIDE][NUM_SIDE];
+    isOpenDir = new boolean[NUM_SIDE][NUM_SIDE][3][3];
     for(int i=0; i<NUM_SIDE; ++i){
       for(int j=0; j<NUM_SIDE; ++j){
-        this.field[i][j] = NONE;
-        this.fieldPos[i][j] = new PVector((i*2+1)*SIZE/2+SIZE,(j*2+1)*SIZE/2+SIZE);
-        this.isOpen[i][j] = false;
+        field[i][j] = NONE;
+        fieldPos[i][j] = new PVector((i*2+1)*SIZE/2+SIZE,(j*2+1)*SIZE/2+SIZE);
+        isOpen[i][j] = false;
       }
     }
     // set initial stones
-    this.field[NUM_SIDE/2-1][NUM_SIDE/2-1] = WHITE;
-    this.field[NUM_SIDE/2][NUM_SIDE/2] = WHITE;
-    this.field[NUM_SIDE/2-1][NUM_SIDE/2] = BLACK;
-    this.field[NUM_SIDE/2][NUM_SIDE/2-1] = BLACK;
+    field[NUM_SIDE/2-1][NUM_SIDE/2-1] = WHITE;
+    field[NUM_SIDE/2][NUM_SIDE/2] = WHITE;
+    field[NUM_SIDE/2-1][NUM_SIDE/2] = BLACK;
+    field[NUM_SIDE/2][NUM_SIDE/2-1] = BLACK;
   }
 
   // draw all field visuals
@@ -51,9 +51,9 @@ public class Field{
        line(SIZE, i*SIZE+SIZE, width-SIZE, i*SIZE+SIZE);
      }
      // blink which squares you can put stones
-        this.blinkOpenSpace();
+        blinkOpenSpace();
         // blink which square that a stone put last
-        this.blinkLastPut();
+        blinkLastPut();
     }
 
     // indicate which squares you can put stones
@@ -67,8 +67,8 @@ public class Field{
     // if a square is available, blink
     for(int i = 0; i < NUM_SIDE; i++){
       for(int j = 0; j < NUM_SIDE; j++){
-        if(this.isOpen[i][j]){
-          rect(this.fieldPos[i][j].x, this.fieldPos[i][j].y, SIZE, SIZE);
+        if(isOpen[i][j]){
+          rect(fieldPos[i][j].x, fieldPos[i][j].y, SIZE, SIZE);
         }
       }
     }
@@ -76,7 +76,8 @@ public class Field{
 
   // indicate which square that stone put
   private void blinkLastPut() {
-    if(this.indexStonePutLast.x==-1||this.indexStonePutLast.y==-1)return;
+    if(indexStonePutLast.x==-1||indexStonePutLast.y==-1)
+      return;
     rectMode(CENTER);
     // blink color
     float ele_blue = 128.f*cos(global_t*.07)+128.f;
@@ -84,8 +85,8 @@ public class Field{
     strokeWeight(2);
     fill(0, 0, (int)ele_blue, 80);
     // draw a square which is a stone put last
-    int stonelast_x  = (int)this.fieldPos[(int)this.indexStonePutLast.x][(int)this.indexStonePutLast.y].x;
-    int stonelast_y  = (int)this.fieldPos[(int)this.indexStonePutLast.x][(int)this.indexStonePutLast.y].y;
+    int stonelast_x  = (int)fieldPos[(int)indexStonePutLast.x][(int)indexStonePutLast.y].x;
+    int stonelast_y  = (int)fieldPos[(int)indexStonePutLast.x][(int)indexStonePutLast.y].y;
     rect(stonelast_x, stonelast_y, SIZE, SIZE);
   }
 }

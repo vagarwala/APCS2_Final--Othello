@@ -99,7 +99,7 @@ public class Ai{
       for(int j = -1; j < 2; j++){
         if(i == 0 && j == 0)
           continue;
-        if(!this.manager.field.isOpenDir[x][y][i+1][j+1])
+        if(!manager.field.isOpenDir[x][y][i+1][j+1])
           continue;
         // add the number of stones which will reverse if a stone put here(x, y)
         num_stonesYouCanGet += stonesYouCanGet(x+i, y+j, i, j, isBlack);
@@ -114,15 +114,17 @@ public class Ai{
   private int stonesYouCanGet(int x, int y, int dir_x, int dir_y, boolean isMyColorBlack) {
     int myColor = (isMyColorBlack)?BLACK: WHITE;
     // end of counting stones
-    if(this.manager.field.field[x][y] == myColor)return 0;
+    if(manager.field.field[x][y] == myColor)
+      return 0;
     //recursion
     return 1+stonesYouCanGet(x+dir_x, y+dir_y, dir_x, dir_y, isMyColorBlack);
   }
   
   // evaluate based on the theory of a degree of open
   private float valueOfDegreeOfOpen(int x, int y) {
-    if(x < 0 || NUM_SIDE-1 < x || y < 0 || NUM_SIDE-1 < y)return 0;
-    float[][] tempDegreesOfOpen = calculateDegreesOfOpenFromField(this.manager.field, this.isBlack);
+    if(x < 0 || NUM_SIDE-1 < x || y < 0 || NUM_SIDE-1 < y)
+      return 0;
+    float[][] tempDegreesOfOpen = calculateDegreesOfOpenFromField(manager.field, isBlack);
     // max of the values of the a degree of open
     float max = 0.f;
     for(float[] vals: tempDegreesOfOpen){
@@ -151,19 +153,22 @@ public class Ai{
       }
     }
     // end recursion
-    if(fieldObj.field.length != NUM_SIDE || fieldObj.field[0].length != NUM_SIDE)return valuesOfAll;
+    if(fieldObj.field.length != NUM_SIDE || fieldObj.field[0].length != NUM_SIDE)
+      return valuesOfAll;
     // continue recursion
     for(int i = 0; i < NUM_SIDE; i++){
       for (int j = 0; j < NUM_SIDE; j++) {
-        if(!fieldObj.isOpen[i][j])continue;
+        if(!fieldObj.isOpen[i][j])
+          continue;
         // initialize buffer
         ArrayList<PVector> buffer_openIndex = new ArrayList<PVector>();
         // check all direction
         for(int _i = -1; _i < 2; _i++){
           for(int _j = -1; _j < 2; _j++){
-            if(!fieldObj.isOpenDir[i][j][_i+1][_j+1])continue;
+            if(!fieldObj.isOpenDir[i][j][_i+1][_j+1])
+              continue;
             // check next to here(i, j)
-            this.countTheNumberOfSpaceOpen(i+_i, j+_j, _i, _j, isBlackTurn, fieldObj, buffer_openIndex);
+            countTheNumberOfSpaceOpen(i+_i, j+_j, _i, _j, isBlackTurn, fieldObj, buffer_openIndex);
           }
         }
         // get raw data of a degree of open
@@ -177,26 +182,32 @@ public class Ai{
   private void countTheNumberOfSpaceOpen(int x, int y, int dir_x, int dir_y, boolean isMyColorBlack, Field fieldObj, ArrayList<PVector> buffer) {
     int myColor = (isMyColorBlack)?BLACK: WHITE;
     // if this stone color is same as mine, end
-    if(myColor == fieldObj.field[x][y])return;
+    if(myColor == fieldObj.field[x][y])
+      return;
     // check around here(x, y)
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
         int target_x = x+i;
         int target_y = y+j;
-        if(target_x<0 || NUM_SIDE-1<target_x || target_y<0 || NUM_SIDE-1<target_y)continue;
-        if(fieldObj.field[target_x][target_y] != NONE)continue;
+        if(target_x<0 || NUM_SIDE-1<target_x || target_y<0 || NUM_SIDE-1<target_y)
+          continue;
+        if(fieldObj.field[target_x][target_y] != NONE)
+          continue;
         boolean bValid = true;
         // check whether or not an overlap is exist
         for(PVector buff: buffer){
           // if there are overlaps, don't count 
-          if(!bValid)break;
-          if(buff.x==target_x && buff.y==target_y)bValid &= false;
+          if(!bValid)
+            break;
+          if(buff.x==target_x && buff.y==target_y)
+            bValid &= false;
         }
         // count
-        if(bValid)buffer.add(new PVector(target_x, target_y));
+        if(bValid)
+          buffer.add(new PVector(target_x, target_y));
       }
     }
     // recursion 
-    this.countTheNumberOfSpaceOpen(x+dir_x, y+dir_y, dir_x, dir_y, isMyColorBlack, fieldObj, buffer);
+    countTheNumberOfSpaceOpen(x+dir_x, y+dir_y, dir_x, dir_y, isMyColorBlack, fieldObj, buffer);
   }
 }

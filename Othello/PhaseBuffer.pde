@@ -6,17 +6,17 @@ public class PhaseBuffer  {
   int turnColor;
   
   public void setField(int field[][]) {
-    this.fieldBuffer = field;
+    fieldBuffer = field;
   }
   public void setPutPos(PVector pos) {
-    this.putPosBuffer.set(pos);
+    putPosBuffer.set(pos);
   }
 
   public int[][] getField() {
-    return this.fieldBuffer;
+    return fieldBuffer;
   }
   public PVector getPutPos() {
-    return this.putPosBuffer;
+    return putPosBuffer;
   }
   
   

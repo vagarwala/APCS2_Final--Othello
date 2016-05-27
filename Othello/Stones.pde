@@ -66,7 +66,7 @@ public class Stones  {
     // draw turn
     for(int k = 0; k < STONE_SIZE; k++){
       pushMatrix();
-      translate(field.fieldPos[_i][_j].x, this.field.fieldPos[_i][_j].y);
+      translate(field.fieldPos[_i][_j].x, field.fieldPos[_i][_j].y);
       rotate(-PI/6);
       ellipse(0, 0, (float)k*cos(PI*(float)animationTime[_i][_j]/(float)animationEndTime), k);  
       popMatrix();

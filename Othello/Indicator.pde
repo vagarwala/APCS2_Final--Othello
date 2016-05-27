@@ -13,17 +13,17 @@ public class Indicator{
   
   public Indicator (Manager manager){
     this.manager = manager;
-    this.easing = new Easing();
+    easing = new Easing();
     if (this.manager.black_turn){
-      this.playerFramePos = new PVector(frameWidth / 2, frameHeight/2 + 3);
+      playerFramePos = new PVector(frameWidth / 2, frameHeight/2 + 3);
     } else{
-      this.playerFramePos = new PVector(width-this.frameWidth/2, this.frameHeight/2+3);
+      playerFramePos = new PVector(width-frameWidth/2, frameHeight/2+3);
     }
   }
   
   public void draw(){
-    this.drawPlayer();
-    this.drawResult();
+    drawPlayer();
+    drawResult();
   }
   private void drawPlayer() {  
     // color
@@ -66,21 +66,21 @@ public class Indicator{
   
   private void drawPlayerFrame() {
     // trigger frame animation when this turn have to pass
-    if(this.manager.isPass)
-      this.bPlayerFrameAnimation = true;
+    if(manager.isPass)
+      bPlayerFrameAnimation = true;
     // animate frame transition
-    if(this.bPlayerFrameAnimation)
-      this.animatePlayerTransition(this.isTargetTurnBlack);
+    if(bPlayerFrameAnimation)
+      animatePlayerTransition(isTargetTurnBlack);
     // frame
     if(!manager.isGameOver){
       rectMode(CENTER);
       stroke(#ff0000);
       strokeWeight(2);
       fill(#ff0000, 30);
-      rect(this.playerFramePos.x, this.playerFramePos.y, this.frameWidth, frameHeight);
+      rect(playerFramePos.x, playerFramePos.y, frameWidth, frameHeight);
     }
     // if this turn have to pass, announce this
-    if(this.manager.isPass){
+    if(manager.isPass){
       // frost background
       rectMode(CENTER);
       fill(frostedCoverColor);
@@ -98,42 +98,42 @@ public class Indicator{
   
   private void animatePlayerTransition(boolean isNextBlack) {
     // for a rainy day
-    if(!this.bPlayerFrameAnimation)
+    if(!bPlayerFrameAnimation)
       return;
     // when next player is black
     if(isNextBlack){
       // easing
-      float newFrameX = this.easing.easeOut(this.frameAnimation_t, (float)width-(float)this.frameWidth/2, -(float)width+(float)this.frameWidth, this.frameAnimationDuration);
-      this.playerFramePos.x = newFrameX;
+      float newFrameX = easing.easeOut(frameAnimation_t, (float)width-(float)frameWidth/2, -(float)width+(float)frameWidth, frameAnimationDuration);
+      playerFramePos.x = newFrameX;
     }
     // when next player is white
     else if(!isNextBlack){
       //easing
-      float newFrameX = this.easing.easeInOut(this.frameAnimation_t, (float)this.frameWidth/2, (float)width-(float)this.frameWidth, this.frameAnimationDuration);
-      this.playerFramePos.x = newFrameX;
+      float newFrameX = easing.easeInOut(frameAnimation_t, (float)frameWidth/2, (float)width-(float)frameWidth, frameAnimationDuration);
+      playerFramePos.x = newFrameX;
     }
     // finish easing
-    if(this.frameAnimationDuration <= this.frameAnimation_t){
-      this.frameAnimation_t = 0.f;
-      this.bPlayerFrameAnimation = false;
-      this.manager.isPass = false;
+    if(frameAnimationDuration <= frameAnimation_t){
+      frameAnimation_t = 0.f;
+      bPlayerFrameAnimation = false;
+      manager.isPass = false;
     }
     // update parameter
-    else this.frameAnimation_t++;
+    else frameAnimation_t++;
   }
   
   private void drawResult() {
     // for a rainy day
-    if(!this.manager.isGameOver)
+    if(!manager.isGameOver)
       return;
-    if(!this.bPlayerFrameAnimation){
+    if(!bPlayerFrameAnimation){
       String resultWinner = "Winner: ";
       // set color of the winner
-      if(this.manager.winner == BLACK)
+      if(manager.winner == BLACK)
         resultWinner += "BLACK";
-      else if(this.manager.winner == WHITE)
+      else if(manager.winner == WHITE)
         resultWinner += "WHITE";
-      else if(this.manager.winner == DRAW)
+      else if(manager.winner == DRAW)
         resultWinner += "DRAW";
       // frost background
       rectMode(CORNER);
@@ -146,18 +146,18 @@ public class Indicator{
       textSize(25);
       textAlign(LEFT, TOP);
       fill(OTHELLO_BLACK);
-      text((int)this.manager.getScores().x, 10, 10);
+      text((int)manager.getScores().x, 10, 10);
       String message;
       message = "BLACK";
       for(int i = 1; i <= message.length(); i++){
-        text(message.substring(i-1,i), 19, 18 + i *24);
+        text(message.substring(i-1,i), 19, 21 + i *23);
       }
       textAlign(RIGHT, TOP);
       fill(OTHELLO_WHITE);
-      text((int)this.manager.getScores().y, width - 10, 10);
+      text((int)manager.getScores().y, width - 10, 10);
       message = "WHITE";
       for(int i = 1; i <= message.length(); i++){
-        text(message.substring(i-1,i), width - 18, 18 + i *24);
+        text(message.substring(i-1,i), width - 18, 21 + i *23);
       }
       textAlign(CENTER, TOP);
       textSize(30);
@@ -165,20 +165,20 @@ public class Indicator{
       text(resultWinner, width/2, 10);
       /*//draw scores
       textSize(40);
-      if(this.manager.winner==BLACK)
+      if(manager.winner==BLACK)
         textSize(50);
       else
         textSize(40);
       textAlign(LEFT);
       fill(0);
-      text((int)this.manager.getScores().x, width/3, height/2+50);
-      if(this.manager.winner == WHITE)
+      text((int)manager.getScores().x, width/3, height/2+50);
+      if(manager.winner == WHITE)
         textSize(50);
       else
         textSize(40);
       textAlign(RIGHT);
       fill(255);
-      text((int)this.manager.getScores().y, 2*width/3, height/2+50);
+      text((int)manager.getScores().y, 2*width/3, height/2+50);
       
       textAlign(CENTER);
       textSize(20);

@@ -6,46 +6,47 @@ public class Buffers{
   }
   
   public void save(int[][] theField, int Put_x, int Put_y, boolean Black, int phase){
-    this.tempPhase = phase;
-    this.buffers.add(new PhaseBuffer(theField, new PVector(Put_x, Put_y), Black));
+    tempPhase = phase;
+    buffers.add(new PhaseBuffer(theField, new PVector(Put_x, Put_y), Black));
   }
   
   public void save(PhaseBuffer tempStatus, int phase){
-    this.tempPhase = phase;
-    this.buffers.add(tempStatus);
+    tempPhase = phase;
+    buffers.add(tempStatus);
   }
   
   public void optimize(){
-    for(int i = this.buffers.size()-1; i > this.tempPhase; i--){
-      this.buffers.remove(i);
+    for(int i = buffers.size()-1; i > tempPhase; i--){
+      buffers.remove(i);
     }
   }
   public PhaseBuffer get(int phase){
     return buffers.get(phase);
   }
   public PhaseBuffer get(int phase, boolean bPhaseSync){
-    if(bPhaseSync)this.tempPhase = phase;
+    if(bPhaseSync)
+      tempPhase = phase;
     int[][] rField = new int[NUM_SIDE][NUM_SIDE];
     for(int i = 0; i < NUM_SIDE; i++){
       for(int j = 0; j < NUM_SIDE; j++){
-        rField[i][j] = this.buffers.get(phase).fieldBuffer[i][j];
+        rField[i][j] = buffers.get(phase).fieldBuffer[i][j];
       }
     }
-    PVector rPutPos = this.buffers.get(phase).putPosBuffer;
-    int rColor = this.buffers.get(phase).turnColor;
-    PhaseBuffer result = new PhaseBuffer(rField, rPutPos, rColor);// buffers.get(phase);
-    this.optimize();
+    PVector rPutPos = buffers.get(phase).putPosBuffer;
+    int rColor = buffers.get(phase).turnColor;
+    PhaseBuffer result = new PhaseBuffer(rField, rPutPos, rColor);
+    optimize();
     return result;
   }
   public void printPhase(){
     println("print all phase buffers");
-    for(int phase = 0; phase <= this.tempPhase; phase++){
+    for(int phase = 0; phase <= tempPhase; phase++){
       println("-------------------");
       println("phase: "+phase);
-      println("turnColor(black-1, white-2): "+this.buffers.get(phase).turnColor);
+      println("turnColor(black-1, white-2): "+buffers.get(phase).turnColor);
       for(int i = 0; i < NUM_SIDE; i++){
         for(int j = 0; j < NUM_SIDE; j++){
-          print(this.buffers.get(phase).fieldBuffer[j][i]+" ");
+          print(buffers.get(phase).fieldBuffer[j][i]+" ");
           if(j==NUM_SIDE-1)println("");
         }
       }

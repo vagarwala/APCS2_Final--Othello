@@ -3,10 +3,10 @@ class CSVExporter{
   String[] keys = {"id", "player1", "player2", "winner"};
   Table table = loadTable("gamedata.csv", "header");
   public void addValues(int p1, int p2, int winner){
-    TableRow newRow = this.table.addRow();
-    newRow.setInt(this.keys[0], this.table.getRowCount()-1);
-    newRow.setInt(this.keys[1], p1);
-    newRow.setInt(this.keys[2], p2);
+    TableRow newRow = table.addRow();
+    newRow.setInt(keys[0], table.getRowCount()-1);
+    newRow.setInt(keys[1], p1);
+    newRow.setInt(keys[2], p2);
     String winnerName = "none";
     switch (winner) {
       case BLACK:
@@ -22,7 +22,7 @@ class CSVExporter{
         winnerName = "none";
         break;  
     }
-    newRow.setString(this.keys[3], winnerName);
-    saveTable(this.table, "data/gamedata.csv");
+    newRow.setString(keys[3], winnerName);
+    saveTable(table, "data/gamedata.csv");
   }
 }
