@@ -218,6 +218,7 @@ public class Manager  {
     this.indicator.bPlayerFrameAnimation = true;
     this.detectSpaceOpen(this.black_turn);
     println("black_turn: "+black_turn);
+    this.isGameOver = false;
   }
   
   private void reset(){

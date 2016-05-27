@@ -27,13 +27,14 @@ public class Stones  {
         // animate reversing stones
         if(bAnimation[i][j])animateTurning(i, j);
         else {
-          if(this.field.field[i][j]==BLACK){
+          if(field.field[i][j]==BLACK){
                 fill(0,30);
-              }else if(this.field.field[i][j]==WHITE){
+              }else if(field.field[i][j]==WHITE){
                 fill(255,30);
               }
               for(int k = 1; k < STONE_SIZE; k++){ 
-                if(this.field.field[i][j]!=NONE)ellipse(this.field.fieldPos[i][j].x, this.field.fieldPos[i][j].y, k, k);
+                if(field.field[i][j]!=NONE)
+                  ellipse(field.fieldPos[i][j].x, field.fieldPos[i][j].y, k, k);
               }
             }
           }
@@ -43,25 +44,29 @@ public class Stones  {
   //animate a stone turning
   private void animateTurning(int _i, int _j){
     // for a rainy day
-    if(!bAnimation[_i][_j])return;
+    if(!bAnimation[_i][_j])
+      return;
     // return false, if empty
-    if(this.field.field[_i][_j] == NONE)return;
-    boolean isNextBlack = (this.field.field[_i][_j]==BLACK)?true:false;
+    if(field.field[_i][_j] == NONE)
+      return;
+    boolean isNextBlack = (field.field[_i][_j]==BLACK)?true:false;
 
     noStroke();
     // change color 
     if(isNextBlack){
-      if(animationTime[_i][_j] < animationEndTime/2)fill(OTHELLO_WHITE, 30);
+      if(animationTime[_i][_j] < animationEndTime/2)
+        fill(OTHELLO_WHITE, 30);
       else fill(OTHELLO_BLACK, 30);  
     }
     else if(!isNextBlack){
-      if(animationTime[_i][_j] < animationEndTime/2)fill(OTHELLO_BLACK, 30);
+      if(animationTime[_i][_j] < animationEndTime/2)
+        fill(OTHELLO_BLACK, 30);
       else fill(OTHELLO_WHITE, 30);
     }
     // draw turn
     for(int k = 0; k < STONE_SIZE; k++){
       pushMatrix();
-      translate(this.field.fieldPos[_i][_j].x, this.field.fieldPos[_i][_j].y);
+      translate(field.fieldPos[_i][_j].x, this.field.fieldPos[_i][_j].y);
       rotate(-PI/6);
       ellipse(0, 0, (float)k*cos(PI*(float)animationTime[_i][_j]/(float)animationEndTime), k);  
       popMatrix();
