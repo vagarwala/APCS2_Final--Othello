@@ -45,3 +45,4 @@ Development Log:
 5/24/16: Completed CSVExporter and undo() and reset(); very easy.  Okay now I really need to get on that AI....  
 5/25/16 - 5/26/16: finished my original AI plan... more on that in Musings.rtf.  
 5/26/16: implemented Mr. Brooks' suggestions (UI-related), mostly about score reporting and board obscuring things.  
+5/27/16: implemented Mr. Brooks' additional UI suggestions  

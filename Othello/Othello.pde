@@ -22,6 +22,9 @@ void settings(){
 }
 void setup(){
   manager = new Manager(false);
+  PFont literation;
+  literation = loadFont("LiterationMonoPowerline-Italic-20.vlw");
+  textFont(literation);
 }
 
 // main program

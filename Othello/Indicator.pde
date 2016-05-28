@@ -140,6 +140,7 @@ public class Indicator{
       fill(frostedCoverColor);
       noStroke();
       rect(SIZE, SIZE, 8*SIZE, 8*SIZE);
+      fill(color(180, 200));
       rect(0, 0, SIZE, 3.5*SIZE);
       rect(width-SIZE, 0, SIZE, 3.5*SIZE);
       // draw winner
@@ -153,7 +154,6 @@ public class Indicator{
         text(message.substring(i-1,i), 19, 21 + i *23);
       }
       textAlign(RIGHT, TOP);
-      fill(OTHELLO_WHITE);
       text((int)manager.getScores().y, width - 10, 10);
       message = "WHITE";
       for(int i = 1; i <= message.length(); i++){
@@ -163,6 +163,7 @@ public class Indicator{
       textSize(30);
       fill(#ff0000);
       text(resultWinner, width/2, 10);
+      text("Press r to reset.", width/2, height - SIZE + 10);
       /*//draw scores
       textSize(40);
       if(manager.winner==BLACK)
