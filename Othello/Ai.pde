@@ -27,7 +27,7 @@ public class Ai{
   public PVector decideStonePos(){
     PVector bestMove = new PVector(-1, -1, -1); // i, j for location, k for evaluation of field[i][j]
     int num_criteria = 3;
-    float[] weights = {0.5, 0.2, 0.3};
+    float[] weights = {0.2, 0.5, 0.3};
     float evaluationValue[][][] = new float[NUM_SIDE][NUM_SIDE][num_criteria+1];
     //initialize to 0
     for (float[][] eValues2:evaluationValue){

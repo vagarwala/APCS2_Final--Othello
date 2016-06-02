@@ -150,7 +150,6 @@ public class Manager  {
         boolean rBlack = black_turn;
 
         PhaseBuffer temp = new PhaseBuffer(tField, new PVector(x, y), rBlack);
-        println("temp", temp);
         buffer.save(temp, gamePhase);
         buffer.printPhase();
         // trigger a animation of frame
@@ -193,7 +192,31 @@ public class Manager  {
     if(isOpponentAi)
       ai.isMyTurn = (ai.isBlack==black_turn)?true: false;
   }
-
+  private void undoMove() {
+    if(indicator.bPlayerFrameAnimation)
+      return;
+    if(gamePhase < 1 || gamePhase > buffer.buffers.size())
+      return;
+    
+    gamePhase--;
+    
+    PhaseBuffer b = buffer.get(gamePhase, true);
+    for(int i = 0; i < NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        field.field[i][j] = b.fieldBuffer[i][j];
+      }
+    }
+    indexStonePutLast.set(b.putPosBuffer);
+    field.indexStonePutLast.set(b.putPosBuffer);
+    println("turncolor",b.turnColor);
+    black_turn = (b.turnColor == BLACK)? true: false;
+    indicator.isTargetTurnBlack = black_turn;
+    indicator.bPlayerFrameAnimation = true;
+    detectSpaceOpen(black_turn);
+    println("black_turn: "+black_turn);
+    isGameOver = false;
+  }
+  
   private void undo() {
     if(indicator.bPlayerFrameAnimation)
       return;
@@ -227,7 +250,8 @@ public class Manager  {
   
   private void reset(){
     if(indicator.bPlayerFrameAnimation)return;
-    if(gamePhase < 1 || gamePhase > buffer.buffers.size())return;
+    if(gamePhase < 1 || gamePhase > buffer.buffers.size())
+      return;
     gamePhase=0;
     PhaseBuffer b = buffer.get(gamePhase, true);
     for(int i = 0; i < NUM_SIDE; i++){

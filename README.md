@@ -1,7 +1,14 @@
 # APCS2_Final--Othello
 
 Repository containing files for Vandana Agarwala's APCS Final Project - an implementation of the game Othello.  User vs. AI.  
-In order to run:   
+In order to play:   
+- open APCS/MKS22X/Final Project/Othello
+- open Othello.pde
+- Press the 'play' button to run.
+- While you are playing, you are black and you play first.  The spots you have available to you will be indicated by a gently flashing red light.  Clicking on the tile you would like to place a disk allows you to play there.
+- At the top, you can see whose turn it is, the current scores, and the margin of difference from your point of view (e.g. "losing by 3").  The game will tell you when you are forced to pass and the screen will change when the game is over.
+- Note that there is a glitch: when one player passes, you must click the screen one more time before it shows you your available positions and you can play again.
+- 
 
 Team Name: Order From Chaos  
 Project Name: Othello  
@@ -46,3 +53,5 @@ Development Log:
 5/25/16 - 5/26/16: finished my original AI plan... more on that in Musings.rtf.  
 5/26/16: implemented Mr. Brooks' suggestions (UI-related), mostly about score reporting and board obscuring things.  
 5/27/16: implemented Mr. Brooks' additional UI suggestions  
+5/28/16-5/30-16: I'M SORRY I DIDN'T WORK OVER MEMORIAL DAY WEEKEND I LITERALLY DID NO WORK ON ANYTHING :(  
+5/31/16 - 6/1/16: considered doing a machine-learning type algorithm because I'm really not motivated to start writing my minimax algorithm but now I'm actually going to start.  
