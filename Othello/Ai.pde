@@ -1,3 +1,4 @@
+import java.util.*;
 public class Ai{
   Manager manager;
   private boolean isBlack;
@@ -24,7 +25,106 @@ public class Ai{
     isMyTurn = false;
   }
   
+  private class Move{
+    public PVector pos = new PVector();
+    public Move(int x, int y){
+      pos.x = x;
+      pos.y = y;
+    }
+  }
+  
+  private class MoveValue {
+
+    public float returnValue;
+    public Move returnMove;
+
+    public MoveValue() {
+        returnValue = 0;
+    }
+
+    public MoveValue(float returnValue) {
+        this.returnValue = returnValue;
+    }
+
+    public MoveValue(float returnValue, Move returnMove) {
+        this.returnValue = returnValue;
+        this.returnMove = returnMove;
+    }
+
+  }
+  
   public PVector decideStonePos(){
+    MoveValue bMove = minMax((float)Integer.MIN_VALUE, (float)Integer.MAX_VALUE, 2, false);
+    Move move = bMove.returnMove;
+    return move.pos;
+  }
+  
+  protected MoveValue minMax(float alpha, float beta, int maxDepth, boolean blackturn) {       
+      manager.black_turn = blackturn;      
+      manager.detectSpaceOpen(blackturn);
+      ArrayList<Move> moves = new ArrayList<Move>();
+      for(int i = 0; i< NUM_SIDE; i++){
+        for(int j = 0; j < NUM_SIDE; j++){
+          if(manager.field.isOpen[i][j]){
+            Move move = new Move(i, j);
+            moves.add(move);
+          }
+        }
+      }
+      Iterator<Move> movesIterator = moves.iterator();
+      float value = 0;
+      boolean isMaximizer = blackturn; 
+      if (maxDepth == 0 || manager.isGameOver) {          
+          return new MoveValue();
+      }
+      MoveValue returnMove;
+      MoveValue bestMove = null;
+      if (isMaximizer) {           
+          while (movesIterator.hasNext()) {
+              Move currentMove = movesIterator.next();
+              manager.putStone((int)currentMove.pos.x, (int)currentMove.pos.y);
+              returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);
+              manager.undoMove();
+              if ((bestMove == null) || (bestMove.returnValue < returnMove.returnValue)) {
+                  bestMove = returnMove;
+                  bestMove.returnMove = currentMove;
+              }
+              if (returnMove.returnValue > alpha) {
+                  alpha = returnMove.returnValue;
+                  bestMove = returnMove;
+              }
+              if (beta <= alpha) {
+                  bestMove.returnValue = beta;
+                  bestMove.returnMove = null;
+                  return bestMove; // pruning
+              }
+          }
+          return bestMove;
+      } else {
+          while (movesIterator.hasNext()) {
+              Move currentMove = movesIterator.next();
+              manager.putStone((int)currentMove.pos.x, (int)currentMove.pos.y);
+              returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);
+              manager.undoMove();
+              if ((bestMove == null) || (bestMove.returnValue > returnMove.returnValue)) {
+                  bestMove = returnMove;
+                  bestMove.returnMove = currentMove;
+              }
+              if (returnMove.returnValue < beta) {
+                  beta = returnMove.returnValue;
+                  bestMove = returnMove;
+              }
+              if (beta <= alpha) {
+                  bestMove.returnValue = alpha;
+                  bestMove.returnMove = null;
+                  return bestMove; // pruning
+              }
+          }
+          return bestMove;
+      }
+  }
+  
+  /*public PVector decideStonePos(){
     PVector bestMove = new PVector(-1, -1, -1); // i, j for location, k for evaluation of field[i][j]
     int num_criteria = 3;
     float[] weights = {0.2, 0.5, 0.3};
@@ -73,6 +173,7 @@ public class Ai{
     }
     return new PVector((int)bestMove.x, (int)bestMove.y);
   }
+  */
   
   private float valueOfStandardMoves(int x, int y){
     // corner - yay!
