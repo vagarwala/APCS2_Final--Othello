@@ -62,32 +62,33 @@ public class Ai{
   protected MoveValue minMax(float alpha, float beta, int maxDepth, boolean blackturn) {       
       manager.black_turn = blackturn;      
       manager.detectSpaceOpen(blackturn);
-      ArrayList<Move> moves = new ArrayList<Move>();
+      ArrayList<MoveValue> moves = new ArrayList<MoveValue>();
       for(int i = 0; i< NUM_SIDE; i++){
         for(int j = 0; j < NUM_SIDE; j++){
           if(manager.field.isOpen[i][j]){
-            Move move = new Move(i, j);
+            float ret = valueOfStonesYouCanGet(i, j, blackturn);
+            MoveValue move = new MoveValue(ret, new Move(i, j));
             moves.add(move);
           }
         }
       }
-      Iterator<Move> movesIterator = moves.iterator();
+      Iterator<MoveValue> movesIterator = moves.iterator();
       float value = 0;
       boolean isMaximizer = blackturn; 
-      if (maxDepth == 0 || manager.isGameOver) {          
+      if (maxDepth == 0 || manager.isGameOver) {
           return new MoveValue();
       }
       MoveValue returnMove;
       MoveValue bestMove = null;
       if (isMaximizer) {           
           while (movesIterator.hasNext()) {
-              Move currentMove = movesIterator.next();
-              manager.putStone((int)currentMove.pos.x, (int)currentMove.pos.y);
+              MoveValue currentMove = movesIterator.next();
+              manager.putStone((int)currentMove.returnMove.pos.x, (int)currentMove.returnMove.pos.y);
               returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);
               manager.undoMove();
               if ((bestMove == null) || (bestMove.returnValue < returnMove.returnValue)) {
                   bestMove = returnMove;
-                  bestMove.returnMove = currentMove;
+                  bestMove.returnMove = currentMove.returnMove;
               }
               if (returnMove.returnValue > alpha) {
                   alpha = returnMove.returnValue;
@@ -102,13 +103,13 @@ public class Ai{
           return bestMove;
       } else {
           while (movesIterator.hasNext()) {
-              Move currentMove = movesIterator.next();
-              manager.putStone((int)currentMove.pos.x, (int)currentMove.pos.y);
+              MoveValue currentMove = movesIterator.next();
+              manager.putStone((int)currentMove.returnMove.pos.x, (int)currentMove.returnMove.pos.y);
               returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);
               manager.undoMove();
               if ((bestMove == null) || (bestMove.returnValue > returnMove.returnValue)) {
                   bestMove = returnMove;
-                  bestMove.returnMove = currentMove;
+                  bestMove.returnMove = currentMove.returnMove;
               }
               if (returnMove.returnValue < beta) {
                   beta = returnMove.returnValue;
@@ -145,7 +146,7 @@ public class Ai{
         evaluationValue[i][j][0] += valueOfStandardMoves(i, j);
         if (evaluationValue[i][j][0] == 1)
           return new PVector((int)i, (int)j);
-        evaluationValue[i][j][1] += valueOfStonesYouCanGet(i, j);
+        evaluationValue[i][j][1] += valueOfStonesYouCanGet(i, j, isBlack);
         evaluationValue[i][j][2] += valueOfDegreeOfOpen(i, j);
       }
     }
@@ -193,7 +194,7 @@ public class Ai{
     return 0.5;
   }
   
-  private float valueOfStonesYouCanGet(int x, int y) {
+  private float valueOfStonesYouCanGet(int x, int y, boolean Black) {
     int num_stonesYouCanGet = 0;
     float evaluationValue = 0; // evaluation value which will return 
     // check all direction around myself
@@ -204,7 +205,7 @@ public class Ai{
         if(!manager.field.isOpenDir[x][y][i+1][j+1])
           continue;
         // add the number of stones which will reverse if a stone put here(x, y)
-        num_stonesYouCanGet += stonesYouCanGet(x+i, y+j, i, j, isBlack);
+        num_stonesYouCanGet += stonesYouCanGet(x+i, y+j, i, j, Black);
       }
     }
     // normalize the number of stones which you could reverse
