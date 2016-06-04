@@ -53,8 +53,6 @@ public class Ai{
 
   }
   
-  /*
-  
   public PVector decideStonePos(){
     MoveValue bMove = minMax((float)Integer.MIN_VALUE, (float)Integer.MAX_VALUE, 2, false);
     Move move = bMove.returnMove;
@@ -125,9 +123,7 @@ public class Ai{
           return bestMove;
       }
   }
-  
-  */
-  
+  /*
   public PVector decideStonePos(){
     PVector bestMove = new PVector(-1, -1, -1); // i, j for location, k for evaluation of field[i][j]
     int num_criteria = 3;
@@ -177,6 +173,7 @@ public class Ai{
     }
     return new PVector((int)bestMove.x, (int)bestMove.y);
   }
+  */
   
   
   private float valueOfStandardMoves(int x, int y){
