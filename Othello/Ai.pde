@@ -25,34 +25,6 @@ public class Ai{
     isMyTurn = false;
   }
   
-  private class Move{
-    public PVector pos = new PVector();
-    public Move(int x, int y){
-      pos.x = x;
-      pos.y = y;
-    }
-  }
-  
-  private class MoveValue {
-
-    public float returnValue;
-    public Move returnMove;
-
-    public MoveValue() {
-        returnValue = 0;
-    }
-
-    public MoveValue(float returnValue) {
-        this.returnValue = returnValue;
-    }
-
-    public MoveValue(float returnValue, Move returnMove) {
-        this.returnValue = returnValue;
-        this.returnMove = returnMove;
-    }
-
-  }
-  
   /*
   
   //// MINIMAX VERSION 1 -- NOT WORKING ////
@@ -63,7 +35,7 @@ public class Ai{
     return move.pos;
   }
   
-  protected MoveValue minMax(float alpha, float beta, int maxDepth, boolean blackturn) {       
+  private MoveValue minMax(float alpha, float beta, int maxDepth, boolean blackturn) {       
       manager.black_turn = blackturn;      
       manager.detectSpaceOpen(blackturn);
       ArrayList<MoveValue> moves = new ArrayList<MoveValue>();
@@ -128,15 +100,17 @@ public class Ai{
           }
           return bestMove;
       }
+      */
   
-  */
+  /*
   
   //// MINIMAX VERSION 2, WITHOUT A-B PRUNING ////
   
+  
   public int minimax(int depth) {
-    if (isMyTurn) {  /* White is the maximizing player */
+    if (isMyTurn) {
       return valueMax(depth);
-    } else {      /* Black is the minimizing player */
+    } else {
       return valueMin(depth);
     }
   }
@@ -195,8 +169,9 @@ public class Ai{
     return best;
   }
   
+  //BUT HOW DO I GET THE MOVE
   
-  /*
+  */
   
   //// ORIGINAL ALGO - NOT MINIMAX, BUT WORKING ////
   
@@ -249,8 +224,6 @@ public class Ai{
     }
     return new PVector((int)bestMove.x, (int)bestMove.y);
   }
-  */
-  
   
   private float valueOfStandardMoves(int x, int y){
     // corner - yay!
