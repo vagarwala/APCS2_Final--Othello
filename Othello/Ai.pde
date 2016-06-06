@@ -53,6 +53,10 @@ public class Ai{
 
   }
   
+  /*
+  
+  //// MINIMAX VERSION 1 -- NOT WORKING ////
+  
   public PVector decideStonePos(){
     MoveValue bMove = minMax((float)Integer.MIN_VALUE, (float)Integer.MAX_VALUE, 2, false);
     Move move = bMove.returnMove;
@@ -76,7 +80,8 @@ public class Ai{
       float value = 0;
       boolean isMaximizer = blackturn; 
       if (maxDepth == 0 || manager.isGameOver) {
-          return new MoveValue();
+          float retVal = manager.getScores().y;
+          return new MoveValue(retVal);
       }
       MoveValue returnMove;
       MoveValue bestMove = null;
@@ -84,7 +89,7 @@ public class Ai{
           while (movesIterator.hasNext()) {
               MoveValue currentMove = movesIterator.next();
               manager.putStone((int)currentMove.returnMove.pos.x, (int)currentMove.returnMove.pos.y);
-              returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);
+              returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);;
               manager.undoMove();
               if ((bestMove == null) || (bestMove.returnValue < returnMove.returnValue)) {
                   bestMove = returnMove;
@@ -123,8 +128,78 @@ public class Ai{
           }
           return bestMove;
       }
+  
+  */
+  
+  //// MINIMAX VERSION 2, WITHOUT A-B PRUNING ////
+  
+  public int minimax(int depth) {
+    if (isMyTurn) {  /* White is the maximizing player */
+      return valueMax(depth);
+    } else {      /* Black is the minimizing player */
+      return valueMin(depth);
+    }
   }
+
+  private int valueMax(int depth) {
+    int best = Integer.MIN_VALUE;
+    if (depth <= 0 || manager.isGameOver) {
+      return (int)manager.getScores().y;
+    }
+    manager.detectSpaceOpen(false);
+    ArrayList<MoveValue> moves = new ArrayList<MoveValue>();
+    for(int i = 0; i< NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        if(manager.field.isOpen[i][j]){
+          float ret = valueOfStonesYouCanGet(i, j, false);
+          MoveValue move = new MoveValue(ret, new Move(i, j));
+          moves.add(move);
+        }
+      }
+    }
+    for (MoveValue move : moves) {
+      manager.putStone((int)move.returnMove.pos.x, (int)move.returnMove.pos.y);
+      int value = valueMin(depth - 1);
+      manager.undoMove();
+      if (value > best) {
+        best = value;
+      }
+    }
+    return best;
+  }
+
+  private int valueMin(int depth) {
+    int best = Integer.MAX_VALUE;
+    if (depth <= 0 || manager.isGameOver) {
+      return (int)manager.getScores().x;
+    }
+    manager.detectSpaceOpen(true);
+    ArrayList<MoveValue> moves = new ArrayList<MoveValue>();
+    for(int i = 0; i< NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        if(manager.field.isOpen[i][j]){
+          float ret = valueOfStonesYouCanGet(i, j, true);
+          MoveValue move = new MoveValue(ret, new Move(i, j));
+          moves.add(move);
+        }
+      }
+    }
+    for (MoveValue move : moves) {
+      manager.putStone((int)move.returnMove.pos.x, (int)move.returnMove.pos.y);
+      int value = valueMin(depth - 1);
+      manager.undoMove();
+      if (value < best) {
+        best = value;
+      }
+    }
+    return best;
+  }
+  
+  
   /*
+  
+  //// ORIGINAL ALGO - NOT MINIMAX, BUT WORKING ////
+  
   public PVector decideStonePos(){
     PVector bestMove = new PVector(-1, -1, -1); // i, j for location, k for evaluation of field[i][j]
     int num_criteria = 3;

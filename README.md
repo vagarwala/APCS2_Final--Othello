@@ -55,3 +55,8 @@ Development Log:
 5/27/16: implemented Mr. Brooks' additional UI suggestions  
 5/28/16-5/30-16: I'M SORRY I DIDN'T WORK OVER MEMORIAL DAY WEEKEND I LITERALLY DID NO WORK ON ANYTHING :(  
 5/31/16 - 6/1/16: considered doing a machine-learning type algorithm because I'm really not motivated to start writing my minimax algorithm but now I'm actually going to start.  
+6/2/16: started writing minimax algorithm
+6/3/16: finished writing my first minimax algorithm but it seems to be exploring one branch fully down to the depth, deciding the game is over, and being like yay i win! so idk  
+6/4/16: ARML :)  
+6/5/16: still not sure why my first minimax doesn't work????  
+6/6/16: trying again, just rewriting

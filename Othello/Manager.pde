@@ -66,6 +66,17 @@ public class Manager  {
       isSaved = true;
     }
   }
+  
+  public int[][] clone(){
+    int[][] ret = new int[NUM_SIDE][NUM_SIDE];
+    for(int i = 0; i < NUM_SIDE; i++){
+      for(int j = 0; j < NUM_SIDE; j++){
+        ret[i][j] = field.field[i][j];
+      }
+    }
+    return ret;
+  }
+    
 
   //if at least one square is available, return true
   public boolean isThereOpen(){
