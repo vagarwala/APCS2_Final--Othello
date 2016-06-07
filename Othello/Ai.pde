@@ -26,7 +26,6 @@ public class Ai{
   }
   
   /*
-  
   //// MINIMAX VERSION 1 -- NOT WORKING ////
   
   public PVector decideStonePos(){
@@ -50,8 +49,9 @@ public class Ai{
       }
       Iterator<MoveValue> movesIterator = moves.iterator();
       float value = 0;
-      boolean isMaximizer = blackturn; 
+      boolean isMaximizer = !blackturn; 
       if (maxDepth == 0 || manager.isGameOver) {
+          manager.isGameOver = false;
           float retVal = manager.getScores().y;
           return new MoveValue(retVal);
       }
@@ -61,6 +61,7 @@ public class Ai{
           while (movesIterator.hasNext()) {
               MoveValue currentMove = movesIterator.next();
               manager.putStone((int)currentMove.returnMove.pos.x, (int)currentMove.returnMove.pos.y);
+              manager.isGameOver = false;
               returnMove = minMax(alpha, beta, maxDepth - 1, !blackturn);;
               manager.undoMove();
               if ((bestMove == null) || (bestMove.returnValue < returnMove.returnValue)) {
@@ -100,7 +101,8 @@ public class Ai{
           }
           return bestMove;
       }
-      */
+  }
+  */
   
   /*
   
@@ -173,6 +175,7 @@ public class Ai{
   
   */
   
+  
   //// ORIGINAL ALGO - NOT MINIMAX, BUT WORKING ////
   
   public PVector decideStonePos(){
@@ -225,6 +228,7 @@ public class Ai{
     return new PVector((int)bestMove.x, (int)bestMove.y);
   }
   
+  
   private float valueOfStandardMoves(int x, int y){
     // corner - yay!
     if(x+y==0 || x*y==(NUM_SIDE-1)*(NUM_SIDE-1) || (x==0&&y==NUM_SIDE-1) || (x==NUM_SIDE-1&&y==0))
@@ -241,6 +245,7 @@ public class Ai{
     // else - ¯\_(ツ)_/¯
     return 0.5;
   }
+  
   
   private float valueOfStonesYouCanGet(int x, int y, boolean Black) {
     int num_stonesYouCanGet = 0;
